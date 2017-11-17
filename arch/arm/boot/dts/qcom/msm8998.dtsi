@@ -2510,10 +2510,6 @@
 		hyplog-size-offset = <0x414>;    /* 0x066BFB34 */
 	};
 
-	qcom_msmhdcp: qcom,msm_hdcp {
-		compatible = "qcom,msm-hdcp";
-	};
-
 	qcom_crypto: qcrypto@1DE0000 {
 		compatible = "qcom,qcrypto";
 		reg = <0x1DE0000 0x20000>,
@@ -2801,7 +2797,7 @@
 					0x260 0x10 0x00
 					0x28c 0x06 0x00
 					0x504 0x03 0x00
-					0x500 0x10 0x00
+					0x500 0x1c 0x00
 					0x50c 0x14 0x00
 					0x4d4 0x0a 0x00
 					0x4d8 0x04 0x00
@@ -2819,23 +2815,20 @@
 					0x9ac 0x00 0x00
 					0x8a0 0x01 0x00
 					0x9e0 0x00 0x00
-					0x9dc 0x20 0x00
+					0x9dc 0x01 0x00
 					0x9a8 0x00 0x00
 					0x8a4 0x01 0x00
 					0x8a8 0x73 0x00
-					0x9d8 0xaa 0x00
+					0x9d8 0x99 0x00
 					0x9b0 0x03 0x00
 					0x804 0x03 0x00
 					0x800 0x00 0x00
 					0x808 0x03 0x00>;
 
-		pinctrl-names = "default", "sleep";
+		pinctrl-names = "default";
 		pinctrl-0 = <&pcie0_clkreq_default
 			&pcie0_perst_default
 			&pcie0_wake_default>;
-		pinctrl-1 = <&pcie0_clkreq_default
-			&pcie0_perst_default
-			&pcie0_wake_sleep>;
 
 		perst-gpio = <&tlmm 35 0>;
 		wake-gpio = <&tlmm 37 0>;
@@ -2917,7 +2910,7 @@
 			qcom,mitigation-freq-khz = <576000>;
 			qcom,vph-high-threshold-uv = <3500000>;
 			qcom,vph-low-threshold-uv = <3300000>;
-			qcom,soc-low-threshold = <10>;
+			qcom,soc-low-threshold = <5>;
 			qcom,thermal-handle = <&msm_thermal_freq>;
 		};
 	};
@@ -3250,8 +3243,6 @@
 		compatible = "qcom,wcn3990-wifi";
 		reg = <0x18800000 0x800000>;
 		reg-names = "membase";
-		clocks = <&clock_gcc clk_rf_clk2_pin>;
-		clock-names = "cxo_ref_clk_pin";
 		interrupts =
 			<0 413 0 /* CE0 */ >,
 			<0 414 0 /* CE1 */ >,
@@ -3265,12 +3256,6 @@
 			<0 423 0 /* CE9 */ >,
 			<0 424 0 /* CE10 */ >,
 			<0 425 0 /* CE11 */ >;
-		vdd-0.8-cx-mx-supply = <&pm8998_l5>;
-		vdd-1.8-xo-supply = <&pm8998_l7_pin_ctrl>;
-		vdd-1.3-rfa-supply = <&pm8998_l17_pin_ctrl>;
-		vdd-3.3-ch0-supply = <&pm8998_l25_pin_ctrl>;
-		qcom,vdd-0.8-cx-mx-config = <800000 800000>;
-		qcom,vdd-3.3-ch0-config = <3104000 3312000>;
 	};
 
 	qcom,icnss@18800000 {
@@ -3375,11 +3360,6 @@
 			 <&clock_gcc clk_rf_clk3_pin>;
 		clock-names = "rf_clk3_clk", "rf_clk3_pin_clk";
 		qcom,smmu-support;
-		qcom,smmu-s1-en;
-		qcom,smmu-fast-map;
-		qcom,smmu-coherent;
-		qcom,smmu-mapping = <0x20000000 0xe0000000>;
-		qcom,keep-radio-on-during-sleep;
 		status = "disabled";
 	};
 
